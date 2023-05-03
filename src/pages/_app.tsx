@@ -1,6 +1,7 @@
 import { type AppType } from "next/app";
+import 'flowbite';
 import { api } from "~/utils/api";
-import { ClerkProvider, SignedIn, UserButton} from "@clerk/nextjs";
+import { ClerkProvider, RedirectToSignIn, SignedOut } from "@clerk/nextjs";
 import {dark} from '@clerk/themes'
 import "~/styles/globals.css";
 const MyApp: AppType = ({ Component, pageProps }) => {
@@ -11,16 +12,13 @@ const MyApp: AppType = ({ Component, pageProps }) => {
       elements: {
         formButtonPrimary: 'bg-yellow-600 hover:bg-amber-600 text-sm normal-case',
         footerActionLink: 'text-yellow-600',
-        userButtonAvatarBox: 'absolute left-0 top-0 m-5 z-auto',
-        rootBox: 'mt-10'
       }
     }}
-    >
-      <SignedIn>
-          <UserButton userProfileMode="navigation" userProfileUrl="user-profile" afterSignOutUrl="/"/>
-      </SignedIn>
-      <Component {...pageProps}>
-      </Component>
+    >  
+        <Component {...pageProps}/>
+        <SignedOut>
+          <RedirectToSignIn redirectUrl={"/"}/>
+        </SignedOut>
     </ClerkProvider>
   )
 };
