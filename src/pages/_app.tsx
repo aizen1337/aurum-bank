@@ -10,15 +10,14 @@ const MyApp: AppType = ({ Component, pageProps }) => {
     appearance={{
       baseTheme: dark,
       elements: {
-        formButtonPrimary: 'bg-yellow-600 hover:bg-amber-600 text-sm normal-case',
+        formButtonPrimary: 'bg-yellow-600 hover:bg-amber-600 text-sm normal-case text-amber-300',
         footerActionLink: 'text-yellow-600',
+        formFieldInput: 'text-zinc-900',
+        otpCodeFieldInputs: 'text-zinc-900'
       }
     }}
     >  
         <Component {...pageProps}/>
-        <SignedOut>
-          <RedirectToSignIn redirectUrl={"/dashboard"}/>
-        </SignedOut>
     </ClerkProvider>
   )
 };

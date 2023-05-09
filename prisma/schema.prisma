@@ -14,7 +14,16 @@ model Transactions {
     id        String   @id @default(cuid())
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
+    senderId String
+    receiverId String
     transactionAmount Int
     currency String
     @@index([id])
+}
+model Accounts {
+    account_id String @id @default(cuid())
+    account_name String
+    createdAt DateTime @default(now())
+    balance Float
+    account_holder String 
 }
