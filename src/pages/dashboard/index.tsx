@@ -1,4 +1,3 @@
-import { useUser } from "@clerk/nextjs";
 import { type NextPage } from "next";
 import Widget from "~/components/Widget/Widget";
 import Link from "next/link";
@@ -6,25 +5,39 @@ import List from "~/components/List/List";
 import { api } from "~/utils/api";
 import { DashboardLayout } from "~/layout/DashboardLayout";
 import TransactionsChart from "./TransactionsChart";
+import { type CARD_TYPE } from "@prisma/client";
 const Dashboard: NextPage = () => {
-  const {user} = useUser()
   const {data, isLoading} = api.transactionsRouter.getUsersTransactions.useQuery()
-  const {data: accounts, isLoading: loadingAccounts} = api.accounts.getAccounts.useQuery()
+  const {data: accounts, isLoading: accountsLoading} = api.accounts.getAccounts.useQuery()
+  const {data: cards, isLoading: cardsLoading} = api.cards.getCards.useQuery()
+  console.log(cards)
+  function switchCardBackground(parameter: CARD_TYPE) {
+    switch(parameter) {
+      case 'PLATINUM': 
+        return 'bg-gradient-to-r from-stone-200 via-neutral-300 to-neutral-400 text-black';
+      case 'GOLD':
+        return 'bg-gradient-to-r from-amber-200 via-amber-500 to-yellow-600 text-white';
+      case 'EXECUTIVE':
+        return 'bg-gradient-to-r from-sky-200 via-indigo-500 to-blue-700 text-white';
+      default:
+      return ''
+    }
+  }
   return (
       <DashboardLayout>
-          <h1 className="text-white font-bold text-4xl fixed top-0 text-center w-full mt-5">Welcome <span className="text-[hsl(36,67%,38%)]">{user?.fullName ? user?.fullName : 'user'}</span>!</h1>
-          <div className="mx-auto md:mx-48 w-full h-full flex flex-col items-center justify-center text-white p-4 md:p-6 2xl:p-10 mt-5">
-              <div className="w-full mt-16 grid grid-cols-2 gap-4 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
+              <div className="h-full w-full grid grid-cols-2 gap-4 text-white p-5 ">
                 <Widget title="Account(s) balance">
                   <>
-                  {accounts?.map((account) => (
-                    <div key={account.account_id} className="w-full shadow-inner hover:shadow-2xl cursor-pointer">
-                      <div className="flex justify-between items-center w-full">
+                  {accountsLoading ? 
+                  <p>Loading accounts...</p>
+                  :
+                  accounts?.map((account) => (
+                    <div key={account.account_id} className="w-full shadow-inner hover:shadow-2xl hover:bg-zinc-900 cursor-pointer p-3 rounded-lg">
+                      <div>
                         <div>
                            <h6 className="text-xl">{account.account_name}</h6>
-                           <small>{account.account_id}</small>
                         </div>
-                        <h1 className="font-extrabold text-2xl text-[hsl(36,67%,38%)] break-keep">{account.balance} $</h1>                    
+                        <h1 className="font-extrabold text-2xl text-[hsl(36,67%,38%)] break-keep">{account.balance} {account.defaultCurrency}</h1>                    
                       </div>
                     </div>
                   ))}
@@ -42,7 +55,22 @@ const Dashboard: NextPage = () => {
                   </Widget>
                   <Widget title="Credit card(s)">
                     <>
-                    <h1>You do not have any credit cards</h1>
+                    {
+                      cardsLoading 
+                      ?
+                      <p>Loading cards...</p>
+                      :
+                      cards?.map((account) => 
+                        account.cards.map((card) => (
+                          <div key={card.card_number} className={`w-full shadow-inner hover:shadow-2xl hover:bg-zinc-900 cursor-pointer p-3 mt-3 rounded-lg ${switchCardBackground(card.card_type)}`}>
+                            <div className="md:flex justify-between items-center w-full">
+                              <p>{card.card_holder}</p>
+                              <small>{card.card_type}</small>
+                            </div>
+                          </div>
+                        ))
+                      )
+                    }
                     <Link href={'dashboard/payment/add'}>
                     <small className="absolute bottom-0 right-0 md:m-5 m-3 hover:text-[hsl(36,67%,38%)] cursor-pointer">
                       Click here to fill the form
@@ -52,7 +80,6 @@ const Dashboard: NextPage = () => {
                   </Widget>
                   <TransactionsChart/>
               </div>
-          </div>
       </DashboardLayout>
   )
 }

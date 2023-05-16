@@ -1,7 +1,7 @@
 import { type AppType } from "next/app";
 import 'flowbite';
 import { api } from "~/utils/api";
-import { ClerkProvider, RedirectToSignIn, SignedOut } from "@clerk/nextjs";
+import { ClerkProvider } from "@clerk/nextjs";
 import {dark} from '@clerk/themes'
 import "~/styles/globals.css";
 const MyApp: AppType = ({ Component, pageProps }) => {

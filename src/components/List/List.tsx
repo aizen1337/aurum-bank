@@ -13,9 +13,10 @@ const List = (props: Props) => {
     <ul>
     {
     props.data.map((transaction) => 
-    (
-        <li key={transaction.id} className={`${transaction.senderId == user?.id ? 'text-red-500' : 'text-lime-600'} flex md:gap-4 gap-1`}>
-            <span>{transaction.senderId == user?.id ? 'Spent' : "Received"}</span>
+    (   
+        <>
+        <li key={transaction.id} className={`${transaction.senderId == user?.id ? 'text-red-500' : 'text-lime-600'} flex md:gap-4 gap-1 m-2`}>
+            <span className='sm:block hidden'>{transaction.senderId == user?.id ? 'Spent' : "Received"}</span>
             <p>{transaction.transactionAmount} <small>{transaction.currency.replaceAll('"'," ")}</small></p>
             {transaction.senderId == user?.id 
             ?
@@ -27,7 +28,10 @@ const List = (props: Props) => {
               <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 6.75L12 3m0 0l3.75 3.75M12 3v18" />
             </svg>
             }
+            <small>{transaction.createdAt.toLocaleDateString('pl-PL')}</small>
         </li>
+        <hr className='mx-5 border-zinc-700'/>
+        </>
     ))
     }
     </ul>

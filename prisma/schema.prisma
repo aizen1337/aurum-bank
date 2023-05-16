@@ -14,16 +14,35 @@ model Transactions {
     id        String   @id @default(cuid())
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
-    senderId String
+    senderId String 
     receiverId String
     transactionAmount Int
     currency String
-    @@index([id])
+    transactionTitle String @default("Money transfer")
 }
 model Accounts {
     account_id String @id @default(cuid())
     account_name String
     createdAt DateTime @default(now())
-    balance Float
+    balance Float @default(0)
+    defaultCurrency String
     account_holder String 
+    cards Cards[]
+}
+
+model Cards {
+    card_number String @id @default(cuid())
+    card_holder String
+    card_type CARD_TYPE
+    card_expiration_date DateTime 
+    card_cvv Int
+    account Accounts @relation(fields: [account_id], references: [account_id])
+    account_id String
+}
+
+enum CARD_TYPE {
+    STANDARD
+    GOLD
+    PLATINUM
+    EXECUTIVE
 }
