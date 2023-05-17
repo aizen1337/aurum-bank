@@ -23,7 +23,7 @@ const Sidebar = () => {
     <aside className="fixed left-0 md:top-0 bottom-0 md:h-screen h-24 md:w-36 w-full bg-zinc-800 flex md:flex-col items-center justify-evenly text-center z-50">
         <h1 className="text-white text-4xl font-extrabold tracking-tight md:flex md:flex-col hidden p-10"><span className="text-[hsl(36,67%,38%)]">Aurum</span> Bank</h1>
         <SidebarItem icon={homeIcon} title='Dashboard' destination='/dashboard'/>
-        <SidebarItem icon={paymentsIcon} title='Payments' destination='dashboard/payments'/>
+        <SidebarItem icon={paymentsIcon} title='Payment' destination='/dashboard/payment/add'/>
         <SidebarItem icon={productIcon} title='Cards'  destination='dashboard/products/new'/>
         <SidebarItem icon={financesIcon} title='Finances' destination='dashboard/finances'/>
         <div className="md:mt-auto md:mb-2 mr-5 md:mr-0">
