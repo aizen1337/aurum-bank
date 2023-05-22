@@ -1,6 +1,6 @@
-import Image from 'next/image'
+import React from 'react'
 import {SignedOut, SignIn } from '@clerk/nextjs'
-export default async function Home() {
+const Page = () => {
   return (
     <section className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#252525] to-[#141414]">
       <div className="container flex flex-col items-center justify-center gap-12 px-10">
@@ -8,9 +8,11 @@ export default async function Home() {
         Welcome to <span className="text-[hsl(36,67%,38%)]">Aurum</span> Bank
         </h1>
         <SignedOut>
-          <SignIn afterSignInUrl={"dashboard"}/>
+          <SignIn afterSignInUrl={"/dashboard"}/>
         </SignedOut>
       </div>
   </section>
   )
 }
+
+export default Page
