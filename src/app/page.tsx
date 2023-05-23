@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import {SignedOut, SignIn } from '@clerk/nextjs'
 export default async function Home() {
   return (

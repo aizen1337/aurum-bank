@@ -1,18 +1,19 @@
 import { useUser } from '@clerk/nextjs'
+import { User } from '@clerk/nextjs/dist/server'
 import { type Transactions } from '@prisma/client'
 import React from 'react'
 
 type Props = {
     data?: Transactions[],
+    user?: User | null
 }
-const List = (props: Props) => {
-  const {user} = useUser()
+const List = ({data, user}: Props) => {
   return (
-    props.data && props.data.length > 0
+    data && data.length > 0
     ?
     <ul>
     {
-    props.data.map((transaction) => 
+    data.map((transaction) => 
     (   
         <>
         <li key={transaction.id} className={`${transaction.senderId == user?.id ? 'text-red-500' : 'text-lime-600'} flex md:gap-4 gap-1 m-2`}>
