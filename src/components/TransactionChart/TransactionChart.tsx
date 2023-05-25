@@ -1,7 +1,11 @@
+'use client'
 import React from 'react'
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
-const TransactionChart = (receivedTransactionsAmount: number, sendTransactions: number) => {
+type ChartData = {
+  transactions: (number | null)[][]
+}
+const TransactionChart = ({transactions}: ChartData ) => {
   ChartJS.register(ArcElement, Tooltip, Legend);
   return (
     <Doughnut 
@@ -9,7 +13,7 @@ const TransactionChart = (receivedTransactionsAmount: number, sendTransactions: 
       labels: ['Expenses','Incomes'],
       datasets: [
         {
-          data: [receivedTransactionsAmount, sendTransactions],
+          data: transactions,
           backgroundColor: ['rgb(39 39 42)','hsl(36,67%,38%)']
         },
       ],

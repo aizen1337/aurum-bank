@@ -7,7 +7,7 @@ export default async function Home() {
         Welcome to <span className="text-[hsl(36,67%,38%)]">Aurum</span> Bank
         </h1>
         <SignedOut>
-          <SignIn afterSignInUrl={"dashboard"}/>
+          <SignIn redirectUrl={"/dashboard"}/>
         </SignedOut>
       </div>
   </section>
