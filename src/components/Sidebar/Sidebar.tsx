@@ -1,3 +1,4 @@
+'use client'
 import React from 'react'
 import SidebarItem from './SidebarItem'
 import { UserButton } from '@clerk/nextjs'
@@ -27,7 +28,10 @@ const Sidebar = () => {
         <SidebarItem icon={productIcon} title='Cards'  destination='dashboard/products/new'/>
         <SidebarItem icon={financesIcon} title='Finances' destination='dashboard/finances'/>
         <div className="md:mt-auto md:mb-2 mr-5 md:mr-0">
-            <UserButton userProfileMode="navigation" userProfileUrl="user-profile" afterSignOutUrl="/"/>
+            <UserButton userProfileMode="navigation" userProfileUrl={
+        typeof window !== "undefined"
+        ? `${window.location.origin}/user-profile`
+        : undefined} afterSignOutUrl="/"/>
         </div>
     </aside>
   )
