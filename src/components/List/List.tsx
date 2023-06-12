@@ -1,13 +1,11 @@
-import { useUser } from '@clerk/nextjs'
-import { User } from '@clerk/nextjs/dist/server'
 import { type Transactions } from '@prisma/client'
 import React from 'react'
 
 type Props = {
     data?: Transactions[],
-    user?: User | null
+    type: 'sent' | 'received'
 }
-const List = ({data, user}: Props) => {
+const List = ({data, type}: Props) => {
   return (
     data && data.length > 0
     ?
@@ -16,10 +14,10 @@ const List = ({data, user}: Props) => {
     data.map((transaction) => 
     (   
         <>
-        <li key={transaction.id} className={`${transaction.senderId == user?.id ? 'text-red-500' : 'text-lime-600'} flex md:gap-4 gap-1 m-2`}>
-            <span className='sm:block hidden'>{transaction.senderId == user?.id ? 'Spent' : "Received"}</span>
+        <li key={transaction.id} className={`${type == 'received' ? 'text-red-500' : 'text-lime-600'} flex md:gap-4 gap-1 m-2`}>
+            <span className='sm:block hidden'>{type == 'received'? 'Spent' : "Received"}</span>
             <p>{transaction.transactionAmount} <small>{transaction.currency.replaceAll('"'," ")}</small></p>
-            {transaction.senderId == user?.id 
+            {type == 'received'
             ?
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 ml-auto">
               <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 17.25L12 21m0 0l-3.75-3.75M12 21V3" />

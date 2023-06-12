@@ -8,17 +8,23 @@ generator client {
 datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
+  relationMode = "prisma"
 }
 
 model Transactions {
     id        String   @id @default(cuid())
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
-    senderId String 
-    receiverId String
+    source_account Accounts @relation("source", fields: [source_account_id], references: [account_id])
+    source_account_id String
+    destination_account Accounts @relation("destination", fields: [destination_account_id], references: [account_id])
+    destination_account_id String
     transactionAmount Int
     currency String
     transactionTitle String @default("Money transfer")
+    
+    @@index([destination_account_id])
+    @@index([source_account_id])
 }
 model Accounts {
     account_id String @id @default(cuid())
@@ -27,6 +33,8 @@ model Accounts {
     balance Float @default(0)
     defaultCurrency String
     account_holder String 
+    send_transfers Transactions[] @relation("source")
+    received_transfers Transactions[] @relation("destination")
     cards Cards[]
 }
 
@@ -34,10 +42,12 @@ model Cards {
     card_number String @id @default(cuid())
     card_holder String
     card_type CARD_TYPE
-    card_expiration_date DateTime 
+    card_expiration_date DateTime
     card_cvv Int
     account Accounts @relation(fields: [account_id], references: [account_id])
     account_id String
+
+    @@index([account_id])
 }
 
 enum CARD_TYPE {
