@@ -1,14 +1,15 @@
 import type {Accounts, Transactions} from "@prisma/client"
-import database from "@/app/utils/prisma"
+import database from "@/utils/prisma"
 export default class Transaction {
     transaction!: Transactions
-    constructor(transaction: Transactions) {
+    constructor(transaction: Transactions, source_account: Accounts) {
         this.transaction = transaction
+        this.sendTransaction(source_account)
     }
-    async sendTransaction(accountOrigin: Accounts) {        
+    async sendTransaction(source_account: Accounts) {        
         await database.accounts.update({
             where: {
-                account_id: accountOrigin.account_id
+                account_id: source_account.account_id
             },
             data: {
                balance: {

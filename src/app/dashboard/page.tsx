@@ -14,7 +14,6 @@ export default async function Dashboard() {
     const loggedInUser = new BankUser(user!)
     const {accounts, cards, receivedTransfers, sentTransfers} = await loggedInUser.getAllData()
     const chartData = await loggedInUser.getTransactionsAmount()
-    console.log(chartData)
     const tabOptions: TabsHeaderOption[] = [
       {
         title: 'Latest incomes',
@@ -46,15 +45,17 @@ export default async function Dashboard() {
                ))
              )
           }
-          <Link href={'dashboard/payment/add'}>
-              <small className="absolute bottom-0 right-0 md:m-5 m-3 hover:text-[hsl(36,67%,38%)] cursor-pointer">
-                Click here to fill the form
-              </small>
-          </Link>
           </>
         </Widget>
         <Widget title="Latest Transactions">
+          <>
           <Tabs tabs={tabOptions}/>
+          <Link href={'dashboard/payment/add'}>
+              <small className="absolute bottom-0 right-0 md:m-5 m-3 hover:text-[hsl(36,67%,38%)] cursor-pointer">
+                Click here to create a transaction
+              </small>
+          </Link>
+          </>
         </Widget>
          <Widget title="Expenses and Incomes">
           {chartData ?

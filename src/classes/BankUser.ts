@@ -1,15 +1,17 @@
 import { User } from "@clerk/nextjs/dist/server";
-import database from "../app/utils/prisma";
-import { Accounts, Transactions } from "@prisma/client";
+import database from "../utils/prisma";
+import { Accounts } from "@prisma/client";
+import { clerkClient } from "@clerk/nextjs";
+import { Receiver } from "@/app/dashboard/payment/add/Form";
 export default class BankUser {
     user: User 
-    constructor(user: User) {
-        this.user = user
-    }
-    async getTransactions()
-      {
-        return Promise.all([this.getSentTransfers(),this.getReceivedTransfers()])
-    }
+      constructor(user: User) {
+          this.user = user
+      }
+      async getTransactions()
+        {
+          return Promise.all([this.getSentTransfers(),this.getReceivedTransfers()])
+      }
       async getSentTransfers() {
         const transactions = await database.transactions.findMany({
           where: {
@@ -29,6 +31,45 @@ export default class BankUser {
           }
         })
         return transactions
+      }
+      async getRecentReceivers() {
+        const contactList: Receiver[] = []
+        const receivers = await database.transactions.findMany({
+          select: {
+            destination_account_id: true,
+            destination_account: {
+              select: {
+                account_holder: true
+              }
+            }
+          },
+          distinct: ['destination_account_id'],
+          where: {
+            source_account: {
+              account_holder: this.user.id
+            }
+          }
+        })
+            for(const receiver of receivers) {
+              let usersFirstName = (await clerkClient.users.getUser(receiver.destination_account.account_holder)).firstName
+              let usersLastName = (await clerkClient.users.getUser(receiver.destination_account.account_holder)).lastName
+              if(usersFirstName && usersLastName) {
+                let usersFullName = `${usersFirstName} ${usersLastName}`
+                contactList.push({
+                id: receiver.destination_account_id,
+                full_name: usersFullName
+                })
+               }
+               else {
+                contactList.push(
+                  {
+                  id: receiver.destination_account_id,
+                  full_name: "Last receiver"
+                  }
+                )
+             }
+            }
+        return contactList
       }
     async getAccounts(): Promise<Accounts[]> {
     const accounts = await database.accounts.findMany({

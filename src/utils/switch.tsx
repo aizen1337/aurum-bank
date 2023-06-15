@@ -8,6 +8,6 @@ export default function switchCardBackground(parameter: CARD_TYPE) {
       case 'EXECUTIVE':
         return 'bg-gradient-to-r from-sky-200 via-indigo-500 to-blue-700 text-white';
       default:
-      return ''
+        return ''
     }
   }

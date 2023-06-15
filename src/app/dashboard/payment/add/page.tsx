@@ -6,9 +6,10 @@ const Payment = async () => {
   const user = await currentUser()
   const loggedInUser = new BankUser(user!)
   const accounts = await loggedInUser.getAccounts()
+  const receivers = await loggedInUser.getRecentReceivers()
   return (
       <main className='md:w-6/12 w-screen h-screen flex flex-col justify-evenly'>
-          <Form accounts={accounts}/>
+          <Form accounts={accounts} recentReceivers={receivers}/>
       </main>
   )
 }

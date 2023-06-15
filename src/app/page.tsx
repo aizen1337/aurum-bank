@@ -1,14 +1,14 @@
-import { SignIn, currentUser } from '@clerk/nextjs'
-export default async function Home() {
-  const user = currentUser()
-  return (
-    <section className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#252525] to-[#141414]">
-      <div className="container flex flex-col items-center justify-center gap-12 px-10">
-        <h1 className="text-[2rem] md:text-5xl font-extrabold tracking-tight text-white">
-        Welcome to <span className="text-[hsl(36,67%,38%)]">Aurum</span> Bank
-        </h1>
-          {!user && <SignIn afterSignInUrl={'/dashboard'} afterSignUpUrl={'/dashboard'}/>}
-      </div>
-  </section>
-  )
+import React from 'react'
+import { currentUser } from '@clerk/nextjs'
+import { redirect } from 'next/navigation'
+type Props = {}
+
+const page = async (props: Props) => {
+   const user = await currentUser()
+   if(user) {
+    redirect('/dashboard')
+   }
+   redirect('/sign-in');
 }
+
+export default page
