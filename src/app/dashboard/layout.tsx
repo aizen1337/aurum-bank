@@ -8,9 +8,9 @@ export default async function DashboardLayout({
     return (
       <>
       <SignedIn>
-              <main className="flex min-h-screen max-w-screen md:items-center justify-center w-screen md:h-full bg-gradient-to-b from-[#252525] to-[#141414]">
+              <main className="flex min-h-screen max-w-screen lg:items-center justify-center w-screen lg:h-full bg-gradient-to-b from-[#252525] to-[#141414]">
                   <Sidebar/>
-                  <section className="md:ml-52 md:w-full md:flex md:items-center md:justify-center">
+                  <section className="lg:ml-52 lg:w-full lg:flex lg:items-center lg:justify-center">
                   {children}
                   </section>
               </main>

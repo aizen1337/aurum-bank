@@ -3,6 +3,7 @@ import database from "../utils/prisma";
 import { Accounts } from "@prisma/client";
 import { clerkClient } from "@clerk/nextjs";
 import { Receiver } from "@/app/dashboard/payment/add/Form";
+import { groupBy } from "@/utils/groupBy";
 export default class BankUser {
     user: User 
       constructor(user: User) {
@@ -53,23 +54,23 @@ export default class BankUser {
             for(const receiver of receivers) {
               let usersFirstName = (await clerkClient.users.getUser(receiver.destination_account.account_holder)).firstName
               let usersLastName = (await clerkClient.users.getUser(receiver.destination_account.account_holder)).lastName
-              if(usersFirstName && usersLastName) {
-                let usersFullName = `${usersFirstName} ${usersLastName}`
-                contactList.push({
-                id: receiver.destination_account_id,
-                full_name: usersFullName
-                })
-               }
-               else {
-                contactList.push(
-                  {
+                if(usersFirstName && usersLastName) {
+                  let usersFullName = `${usersFirstName} ${usersLastName}`
+                  contactList.push({
                   id: receiver.destination_account_id,
-                  full_name: "Last receiver"
-                  }
-                )
-             }
+                  full_name: usersFullName
+                  })
+                }
+                else {
+                  contactList.push(
+                    {
+                    id: receiver.destination_account_id,
+                    full_name: "Last receiver"
+                    }
+                  )
+              }
             }
-        return contactList
+        return groupBy(contactList, contact => contact.full_name)
       }
     async getAccounts(): Promise<Accounts[]> {
     const accounts = await database.accounts.findMany({
