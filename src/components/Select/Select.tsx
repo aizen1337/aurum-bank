@@ -1,10 +1,11 @@
-import { Accounts } from '@prisma/client'
+import { Accounts, Transactions } from '@prisma/client'
 import ExpandIcon from './ExpandIcon'
 import React, { useState } from 'react'
 import SelectItem from './SelectItem'
 type SelectProps = {
     accounts: Accounts[]
-    setter: React.Dispatch<React.SetStateAction<Accounts>>
+    setter: React.Dispatch<React.SetStateAction<Partial<Transactions>>>
+    selected?: string
 }
 const Select = ({accounts,setter}: SelectProps) => {
   const [selectedAccount, setSelectedAccount] = useState<Accounts | null>(accounts[0])
@@ -24,7 +25,7 @@ const Select = ({accounts,setter}: SelectProps) => {
         onClick={() => 
         { 
         setSelectedAccount(account)
-        setter(account)
+        setter(prevState => ({...prevState, source_account_id: account.account_id}))
         setExpanded(false)
         }}
         selected={selectedAccount}

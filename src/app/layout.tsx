@@ -4,6 +4,7 @@ import { Inter } from 'next/font/google'
 import { dark } from '@clerk/themes'
 const inter = Inter({ subsets: ['latin'] })
 export const dynamic = 'force-dynamic'
+export const runtime = 'nodejs'
 export const metadata = {
   title: 'Welcome to Aurum Bank',
   description: 'Created by Maciej Kalata',

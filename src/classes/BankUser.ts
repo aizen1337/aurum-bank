@@ -8,6 +8,7 @@ export default class BankUser {
     user: User 
       constructor(user: User) {
           this.user = user
+          Promise.resolve(this.createAccountForTheNewUser())
       }
       async getTransactions()
         {
@@ -116,6 +117,19 @@ export default class BankUser {
       } 
     })
     return [Object.values(sentTransactionsSum._sum),Object.values(receivedTransactionsSum._sum)]
+  }
+  async createAccountForTheNewUser() {
+    const accounts = await this.getAccounts() 
+    if(accounts.length == 0) {
+      await database.accounts.create({
+        data: {
+          account_name: 'Default',
+          balance: 2000,
+          defaultCurrency: 'USD',
+          account_holder: this.user?.id
+        }
+      })
+    }
   }
   async getAllData() {
     const accounts = await this.getAccounts()
