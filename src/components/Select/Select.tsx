@@ -14,7 +14,7 @@ const Select = ({accounts,setter}: SelectProps) => {
     <section className='p-5 bg-white text-black rounded-lg m-1 w-full'>
         <header className='flex cursor-pointer gap-4' onClick={() => setExpanded(!expanded)}>
         Choose an account 
-        {selectedAccount && <h1 className='text-amber-900'>{selectedAccount.account_name} ({selectedAccount.balance} {selectedAccount.defaultCurrency})</h1>} 
+        {selectedAccount && <h1 className='text-amber-900'>{selectedAccount.account_name} ({selectedAccount.balance.toExponential(2)} {selectedAccount.defaultCurrency})</h1>} 
         <ExpandIcon/>
         </header>
     {
