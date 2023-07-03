@@ -22,7 +22,6 @@ model Transactions {
     transactionAmount Int
     currency String
     transactionTitle String @default("Money transfer")
-    
     @@index([destination_account_id])
     @@index([source_account_id])
 }
@@ -30,8 +29,8 @@ model Accounts {
     account_id String @id @default(cuid())
     account_name String
     createdAt DateTime @default(now())
-    balance Float @default(0)
-    defaultCurrency String
+    balance Decimal @db.Decimal(18,2) @default(0)
+    defaultCurrency CurrencyCode
     account_holder String 
     send_transfers Transactions[] @relation("source")
     received_transfers Transactions[] @relation("destination")
@@ -55,4 +54,125 @@ enum CARD_TYPE {
     GOLD
     PLATINUM
     EXECUTIVE
+}
+enum CurrencyCode {
+  USD 
+  CAD 
+  EUR 
+  AED 
+  AFN 
+  ALL 
+  AMD 
+  ARS 
+  AUD 
+  AZN 
+  BAM 
+  BDT 
+  BGN 
+  BHD 
+  BIF 
+  BND 
+  BOB 
+  BRL 
+  BWP 
+  BYN 
+  BZD 
+  CDF 
+  CHF 
+  CLP 
+  CNY 
+  COP 
+  CRC 
+  CVE 
+  CZK 
+  DJF 
+  DKK 
+  DOP 
+  DZD 
+  EEK 
+  EGP 
+  ERN 
+  ETB 
+  GBP 
+  GEL 
+  GHS 
+  GNF 
+  GTQ 
+  HKD 
+  HNL 
+  HRK 
+  HUF 
+  IDR 
+  ILS 
+  INR 
+  IQD 
+  IRR 
+  ISK 
+  JMD 
+  JOD 
+  JPY 
+  KES 
+  KHR 
+  KMF 
+  KRW 
+  KWD 
+  KZT 
+  LBP 
+  LKR 
+  LTL 
+  LVL 
+  LYD 
+  MAD 
+  MDL 
+  MGA 
+  MKD 
+  MMK 
+  MOP 
+  MUR 
+  MXN 
+  MYR 
+  MZN 
+  NAD 
+  NGN 
+  NIO 
+  NOK 
+  NPR 
+  NZD 
+  OMR 
+  PAB 
+  PEN 
+  PHP 
+  PKR 
+  PLN 
+  PYG 
+  QAR 
+  RON 
+  RSD 
+  RUB 
+  RWF 
+  SAR 
+  SDG 
+  SEK 
+  SGD 
+  SOS 
+  SYP 
+  THB 
+  TND 
+  TOP 
+  TRY 
+  TTD 
+  TWD 
+  TZS 
+  UAH 
+  UGX 
+  UYU 
+  UZS 
+  VEF 
+  VND 
+  XAF 
+  XOF 
+  YER 
+  ZAR 
+  ZMK 
+  ZWL
 }

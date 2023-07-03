@@ -8,16 +8,18 @@ type ChartData = {
 const TransactionChart = ({transactions}: ChartData ) => {
   ChartJS.register(ArcElement, Tooltip, Legend);
   return (
-    <Doughnut 
-    data={{
-      labels: ['Expenses','Incomes'],
-      datasets: [
-        {
-          data: transactions,
-          backgroundColor: ['rgb(39 39 42)','hsl(36,67%,38%)']
-        },
-      ],
-    }}/>
+    <div className="w-[15rem] md:w-[30rem]">
+        <Doughnut 
+          data={{
+          labels: ['Expenses','Incomes'],
+          datasets: [
+            {
+              data: transactions,
+              backgroundColor: ['rgb(39 39 42)','hsl(36,67%,38%)']
+            },
+          ],
+        }}/>
+    </div>
   )
 }
 

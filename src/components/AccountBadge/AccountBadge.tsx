@@ -10,7 +10,7 @@ const AccountBadge = ({account}: AccountBadgeProps) => {
       <div>
          <h6 className="text-xl">{account.account_name}</h6>
       </div>
-      <h1 className="font-extrabold text-2xl text-[hsl(36,67%,38%)] break-keep">{account.balance} {account.defaultCurrency}</h1>                    
+      <h1 className="font-extrabold text-2xl text-[hsl(36,67%,38%)] break-keep">{account.balance.toString()} {account.defaultCurrency}</h1>                    
     </div>
   </div>
   )

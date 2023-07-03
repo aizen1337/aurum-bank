@@ -25,8 +25,8 @@ const Sidebar = () => {
         <h1 className="text-white text-4xl font-extrabold tracking-tight lg:flex lg:flex-col hidden p-10"><span className="text-[hsl(36,67%,38%)]">Aurum</span> Bank</h1>
         <SidebarItem icon={homeIcon} title='Dashboard' destination='/dashboard'/>
         <SidebarItem icon={paymentsIcon} title='Payment' destination='/dashboard/payment/add'/>
-        <SidebarItem icon={productIcon} title='Cards'  destination='dashboard/products/new'/>
-        <SidebarItem icon={financesIcon} title='Finances' destination='dashboard/finances'/>
+        <SidebarItem icon={productIcon} title='Cards'  destination='/dashboard/products/new'/>
+        <SidebarItem icon={financesIcon} title='Finances' destination='/dashboard/accounts'/>
         <div className="lg:mt-auto lg:mb-2 mr-5 lg:mr-0">
             <UserButton userProfileMode="navigation" userProfileUrl={
         typeof window !== "undefined"

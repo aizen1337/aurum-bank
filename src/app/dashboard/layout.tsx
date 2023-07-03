@@ -16,7 +16,7 @@ export default async function DashboardLayout({
               </main>
       </SignedIn>
       <SignedOut>
-        <RedirectToSignIn afterSignInUrl={'/dashboard'} afterSignUpUrl={`/api/user_created`}/>
+        <RedirectToSignIn afterSignInUrl={'/dashboard'} afterSignUpUrl={`/dashboard`}/>
       </SignedOut>
       </>
     );
