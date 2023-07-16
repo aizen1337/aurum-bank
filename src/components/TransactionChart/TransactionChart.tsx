@@ -8,7 +8,7 @@ type ChartData = {
 const TransactionChart = ({transactions}: ChartData ) => {
   ChartJS.register(ArcElement, Tooltip, Legend);
   return (
-    <div className="w-[15rem] md:w-[30rem]">
+    <div className="w-full">
         <Doughnut 
           data={{
           labels: ['Expenses','Incomes'],

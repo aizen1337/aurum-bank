@@ -116,8 +116,42 @@ export default class BankUser {
         transactionAmount: true
       } 
     })
-    return [Object.values(sentTransactionsSum._sum),Object.values(receivedTransactionsSum._sum)]
+    return [Object.values(sentTransactionsSum._sum), Object.values(receivedTransactionsSum._sum)]
   }
+  async recentTransactionsAmounts() {
+    const onlyIncomesAmounts = await database.transactions.findMany({
+      select: {
+        transactionAmount: true
+      },
+      where: {
+        destination_account: {
+          account_holder: this?.user.id
+        }
+      }
+    })
+    const onlyExpensesAmounts = await database.transactions.findMany({
+      select: {
+        transactionAmount: true
+      },
+      where: {
+        source_account: {
+          account_holder: this?.user.id
+        }
+      }
+    })
+      const expenses: number[] = [];
+      const incomes: number[] = [];
+      onlyIncomesAmounts.forEach((value) => {
+        incomes.push(value.transactionAmount)
+      })
+        onlyExpensesAmounts.forEach((value) => {
+        expenses.push(value.transactionAmount)
+      })
+      return {
+        expenses: expenses,
+        incomes: incomes
+      }
+    }
   async createAccountForTheNewUser() {
     const accounts = await this.getAccounts() 
     if(accounts.length == 0) {
