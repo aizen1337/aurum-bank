@@ -3,7 +3,7 @@ import ContactList from '@/components/ContactList/ContactList'
 import  finalizeTransaction  from './finalizeTransaction'
 import Select from '@/components/Select/Select'
 import { Accounts, Transactions } from '@prisma/client'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 export type Receiver = {
   id: string,
   full_name: string

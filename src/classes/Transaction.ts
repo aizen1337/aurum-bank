@@ -8,7 +8,7 @@ export default class Transaction {
         this.sendTransaction()
     }
     async sendTransaction() {
-        let amountAfterConvertion = await this.checkDefaultCurrencies()
+        let amountAfterConvertion = await this.beginConversion()
         await database.accounts.update({
             where: {
                 account_id: this.transaction.source_account_id
@@ -33,7 +33,7 @@ export default class Transaction {
             data: this.transaction
         })
     }
-    async checkDefaultCurrencies() {
+    async beginConversion() {
         const sourceCurrency = await database.accounts.findUnique({
             select: {
                 defaultCurrency: true

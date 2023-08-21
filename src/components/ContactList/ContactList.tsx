@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import ExpandIcon from '../Select/ExpandIcon'
-import { Receiver, Receivers } from '@/app/dashboard/payment/add/Form'
+import { Receivers } from '@/app/dashboard/payment/add/Form'
 import { Transactions } from '@prisma/client'
 type Props = {
     onChange?: React.ChangeEventHandler<HTMLInputElement> | undefined
@@ -38,7 +38,9 @@ const ContactList = ({setNumber, contacts, currentContact}: Props) => {
                 <input type='text' className="p-5 w-full text-black rounded-lg" 
                 placeholder="Expand list via icon on the right or enter number manually" 
                 value={currentContact} 
-                onChange={(e) => setNumber(prevState => ({...prevState, destination_account_id: e.target.value }))}/>
+                onChange={(e) => {
+                    setNumber(prevState => ({...prevState, destination_account_id: e.target.value }))
+                }}/>
                 <i onClick={() => setExpanded(!expanded)} className='p-5'>
                     <ExpandIcon />
                 </i>
