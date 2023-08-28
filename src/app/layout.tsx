@@ -1,6 +1,11 @@
 import { ClerkProvider } from '@clerk/nextjs'
 import './globals.css'
 import { dark } from '@clerk/themes'
+import {Quicksand} from 'next/font/google'
+const roboto = Quicksand({
+  weight: '600',
+  subsets: ['latin'],
+})
 export const metadata = {
   title: 'Welcome to Aurum Bank',
   description: 'Created by Maciej Kalata',
@@ -22,7 +27,7 @@ export default function RootLayout({
       
     }}>
     <html lang="en">
-      <body>
+      <body className={roboto.className}>
         {children}
       </body>
     </html>

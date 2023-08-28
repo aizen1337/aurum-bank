@@ -10,7 +10,7 @@ const Page = async () => {
   return (
     <main className='w-9/12 h-screen flex flex-col justify-center'>
         <TransactionsHistoryChart incomes={transactions.incomes} expenses={transactions.expenses}/>
-        <FloatingPanel/>
+        {/* {`<FloatingPanel/>`} */}
     </main>
   )
 }

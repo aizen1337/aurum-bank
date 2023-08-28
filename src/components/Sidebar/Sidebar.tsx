@@ -21,13 +21,13 @@ const Sidebar = () => {
     </svg>
   
   return (
-    <aside className="fixed left-0 lg:top-0 bottom-0 lg:h-screen h-24 lg:w-36 w-full bg-zinc-800 flex lg:flex-col items-center justify-evenly text-center z-50">
-        <h1 className="text-white text-4xl font-extrabold tracking-tight lg:flex lg:flex-col hidden p-10"><span className="text-[hsl(36,67%,38%)]">Aurum</span> Bank</h1>
+    <aside className="fixed left-0 xl:top-0 bottom-0 xl:h-screen h-24 xl:w-36 w-full bg-zinc-800 flex xl:flex-col items-center justify-evenly text-center z-50">
+        <h1 className="text-white text-4xl font-extrabold tracking-tight xl:flex xl:flex-col hidden p-10"><span className="text-[hsl(36,67%,38%)]">Aurum</span> Bank</h1>
         <SidebarItem icon={homeIcon} title='Dashboard' destination='/dashboard'/>
         <SidebarItem icon={paymentsIcon} title='Payment' destination='/dashboard/payment/add'/>
         <SidebarItem icon={productIcon} title='Cards'  destination='/dashboard/cards'/>
         <SidebarItem icon={financesIcon} title='Finances' destination='/dashboard/accounts'/>
-        <div className="lg:mt-auto lg:mb-2 mr-5 lg:mr-0">
+        <div className="xl:mt-auto xl:mb-2 mr-5 xl:mr-0">
         <UserButton userProfileMode="navigation" userProfileUrl='/dashboard/user-profile' afterSignOutUrl="/"/>
         </div>
     </aside>

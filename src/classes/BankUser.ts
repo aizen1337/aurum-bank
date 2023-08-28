@@ -11,8 +11,24 @@ export default class BankUser {
           Promise.resolve(this.createAccountForTheNewUser())
       }
       async getTransactions()
-        {
+      {
           return Promise.all([this.getSentTransfers(),this.getReceivedTransfers()])
+      }
+      async getLatestTransactions() {
+          const latestTransactions = await database.transactions.findMany({
+            take: 5,
+            include: {
+              source_account: {
+                select: {
+                  account_holder: true
+                }
+              }
+            },
+            orderBy: {
+              createdAt: 'desc'
+            }
+          })
+          return latestTransactions
       }
       async getSentTransfers() {
         const transactions = await database.transactions.findMany({
@@ -20,6 +36,17 @@ export default class BankUser {
             destination_account: {
               account_holder: this.user.id
             }
+          },
+          take: 5,
+          include: {
+            source_account: {
+              select: {
+                account_holder: true
+              }
+            }
+          },
+          orderBy: {
+            createdAt: 'desc'
           }
         })
         return transactions;
@@ -30,7 +57,18 @@ export default class BankUser {
             source_account: {
               account_holder: this.user.id
             }
-          }
+          },
+            take: 5,
+            include: {
+              source_account: {
+                select: {
+                  account_holder: true
+                }
+              }
+            },
+            orderBy: {
+              createdAt: 'desc'
+            }
         })
         return transactions
       }
@@ -171,6 +209,7 @@ export default class BankUser {
     const transactions = await this.getTransactions()
     const sentTransfers = await this.getSentTransfers()
     const receivedTransfers = await this.getReceivedTransfers()
-    return {accounts, cards, transactions, sentTransfers, receivedTransfers}
+    const latestTransactions = await this.getLatestTransactions()
+    return {accounts, cards, transactions, sentTransfers, receivedTransfers, latestTransactions}
   }
 }
