@@ -28,10 +28,7 @@ const Sidebar = () => {
         <SidebarItem icon={productIcon} title='Cards'  destination='/dashboard/cards'/>
         <SidebarItem icon={financesIcon} title='Finances' destination='/dashboard/accounts'/>
         <div className="lg:mt-auto lg:mb-2 mr-5 lg:mr-0">
-            <UserButton userProfileMode="navigation" userProfileUrl={
-        typeof window !== "undefined"
-        ? `${window.location.origin}/user-profile`
-        : undefined} afterSignOutUrl="/"/>
+        <UserButton userProfileMode="navigation" userProfileUrl='/dashboard/user-profile' afterSignOutUrl="/"/>
         </div>
     </aside>
   )
