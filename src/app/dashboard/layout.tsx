@@ -6,7 +6,7 @@ export default async function DashboardLayout({
     children: React.ReactNode;
   }) {
     return (
-      <>
+      <div>
       <SignedIn>
               <main className="flex min-h-screen max-w-screen lg:items-center justify-center w-screen lg:h-full bg-gradient-to-b from-[#252525] to-[#141414]">
                   <Sidebar/>
@@ -18,6 +18,6 @@ export default async function DashboardLayout({
       <SignedOut>
         <RedirectToSignIn afterSignInUrl={'/dashboard'} afterSignUpUrl={`/dashboard`}/>
       </SignedOut>
-      </>
+      </div>
     );
   }
