@@ -9,6 +9,10 @@ import TransactionChart from '@/components/TransactionChart/TransactionChart'
 import CreditCard from '@/components/CreditCard/CreditCard'
 import Tabs, { TabsHeaderOption } from '@/components/Tabs/Tabs'
 import { Cards } from '@prisma/client'
+export const metadata = {
+  title: 'Welcome to Aurum Bank',
+  description: 'Created by Maciej Kalata',
+}
 export default async function Dashboard() {
     const user = await currentUser()
     const loggedInUser = new BankUser(user!)

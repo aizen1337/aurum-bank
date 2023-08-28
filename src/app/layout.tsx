@@ -2,10 +2,6 @@
 import { ClerkProvider } from '@clerk/nextjs'
 import './globals.css'
 import { dark } from '@clerk/themes'
-export const metadata = {
-  title: 'Welcome to Aurum Bank',
-  description: 'Created by Maciej Kalata',
-}
 export default function RootLayout({
   children,
 }: {
