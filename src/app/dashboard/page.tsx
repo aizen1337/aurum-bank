@@ -8,6 +8,7 @@ import BankUser from '../../classes/BankUser'
 import TransactionChart from '@/components/TransactionChart/TransactionChart'
 import CreditCard from '@/components/CreditCard/CreditCard'
 import Tabs, { TabsHeaderOption } from '@/components/Tabs/Tabs'
+import { Cards } from '@prisma/client'
 export default async function Dashboard() {
     const user = await currentUser()
     const loggedInUser = new BankUser(user!)
@@ -35,7 +36,7 @@ export default async function Dashboard() {
         </Widget>
         <Widget title="Cards">
           {
-               cards?.map((account) => 
+               cards?.map((account: {cards: Cards[]}) => 
                account.cards.map((card) => (
                   <CreditCard key={card.card_number} card={card}/>
                ))
