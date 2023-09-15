@@ -1,13 +1,20 @@
-import type { Transactions} from "@prisma/client"
+import type { TransactionWithUserID } from "@/components/List/List"
+import { RateLimit } from "@/lib/Ratelimit"
 import database from "@/utils/prisma"
 import CurrencyConversion from "./CurrencyConversion"
 export default class Transaction {
-    transaction!: Transactions
-    constructor(transaction: Transactions) {
+    transaction!: TransactionWithUserID
+    success = true
+    constructor(transaction: TransactionWithUserID) {
         this.transaction = transaction
         this.sendTransaction()
+       
     }
     async sendTransaction() {
+        await this.isLimited()
+        if(!this.success /*if user is rate limited*/) {
+            throw Error('Too many requests');
+        }
         let amountAfterConvertion = await this.beginConversion()
         await database.accounts.update({
             where: {
@@ -30,7 +37,13 @@ export default class Transaction {
              }
          })
         await database.transactions.create({
-            data: this.transaction
+            data: {
+                transactionTitle: this.transaction.transactionTitle,
+                currency: this.transaction.currency,
+                source_account_id: this.transaction.source_account_id,
+                destination_account_id: this.transaction.destination_account_id,
+                transactionAmount: this.transaction.transactionAmount,
+            }
         })
     }
     async beginConversion() {
@@ -60,5 +73,9 @@ export default class Transaction {
             const newAmount = await new CurrencyConversion(amount, base, target).convert()
             return Number(newAmount);
         }
+    }
+    async isLimited() {
+        const {success} = await RateLimit.limit(this.transaction.source_account_id)
+        this.success = success
     }
 }

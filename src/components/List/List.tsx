@@ -1,7 +1,7 @@
 import { type Transactions } from '@prisma/client'
 import React from 'react'
 import { User } from '@clerk/nextjs/dist/server'
-type TransactionWithUserID = Transactions & {
+export type TransactionWithUserID = Transactions & {
   source_account: {
     account_holder: string;
   }
@@ -16,10 +16,10 @@ const List = ({data, user}: Props) => {
     ?
     <ul>
     {
-    data.map((transaction) => 
+    data.map((transaction, index) => 
     (   
         <>
-        <li key={transaction.id} className={`${transaction.source_account.account_holder  !== user?.id ? 'text-red-500' : 'text-lime-600'} flex md:gap-4 gap-1 m-2`}>
+        <li key={index} className={`${transaction.source_account.account_holder  !== user?.id ? 'text-red-500' : 'text-lime-600'} flex md:gap-4 gap-1 m-2`}>
             <span className='sm:block hidden'>{transaction.source_account.account_holder !== user?.id ? 'Spent' : "Received"}</span>
             <p>{Number(transaction.transactionAmount).toString()} <small>{transaction.currency.replaceAll('"'," ")}</small></p>
             {transaction.source_account.account_holder  !== user?.id
