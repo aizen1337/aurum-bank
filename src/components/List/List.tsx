@@ -21,7 +21,7 @@ const List = ({data, user}: Props) => {
         <>
         <li key={transaction.id} className={`${transaction.source_account.account_holder  !== user?.id ? 'text-red-500' : 'text-lime-600'} flex md:gap-4 gap-1 m-2`}>
             <span className='sm:block hidden'>{transaction.source_account.account_holder !== user?.id ? 'Spent' : "Received"}</span>
-            <p>{transaction.transactionAmount} <small>{transaction.currency.replaceAll('"'," ")}</small></p>
+            <p>{Number(transaction.transactionAmount).toString()} <small>{transaction.currency.replaceAll('"'," ")}</small></p>
             {transaction.source_account.account_holder  !== user?.id
             ?
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 ml-auto">

@@ -4,6 +4,7 @@ import { Accounts } from "@prisma/client";
 import { clerkClient } from "@clerk/nextjs";
 import { Receiver } from "@/app/dashboard/payment/add/Form";
 import { groupBy } from "@/utils/groupBy";
+import groupAndSumTransactionsByMonth from "@/utils/groupAndSumTransactionsByMonth";
 export default class BankUser {
     user: User 
       constructor(user: User) {
@@ -156,35 +157,23 @@ export default class BankUser {
     })
     return [Object.values(sentTransactionsSum._sum), Object.values(receivedTransactionsSum._sum)]
   }
-  async recentTransactionsAmounts() {
+  async recentTransactionsAmountsGroupedByMonth() {
     const onlyIncomesAmounts = await database.transactions.findMany({
-      select: {
-        transactionAmount: true
-      },
       where: {
         destination_account: {
           account_holder: this?.user.id
         }
-      }
+      },
     })
     const onlyExpensesAmounts = await database.transactions.findMany({
-      select: {
-        transactionAmount: true
-      },
       where: {
         source_account: {
           account_holder: this?.user.id
         }
       }
     })
-      const expenses: number[] = [];
-      const incomes: number[] = [];
-      onlyIncomesAmounts.forEach((value) => {
-        incomes.push(value.transactionAmount)
-      })
-        onlyExpensesAmounts.forEach((value) => {
-        expenses.push(value.transactionAmount)
-      })
+      const incomes = groupAndSumTransactionsByMonth(onlyIncomesAmounts)
+      const expenses = groupAndSumTransactionsByMonth(onlyExpensesAmounts)
       return {
         expenses: expenses,
         incomes: incomes

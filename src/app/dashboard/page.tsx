@@ -14,9 +14,9 @@ export const metadata = {
   charset: 'utf-8'
 }
 export default async function Dashboard() {
-    const user = await currentUser()
+    const user = await currentUser();
     const loggedInUser = new BankUser(user!)
-    const {accounts, cards, receivedTransfers, sentTransfers, latestTransactions, } = await loggedInUser.getAllData()
+    const {accounts, cards, receivedTransfers, sentTransfers, latestTransactions} = await loggedInUser.getAllData()
     const summedTransactionsAmount = await loggedInUser.getTransactionsAmount()
     const tabOptions: TabsHeaderOption[] = [
       {
@@ -25,11 +25,11 @@ export default async function Dashboard() {
       },
       {
         title: 'Latest incomes',
-        content: <List data={sentTransfers} user={user!} />
+        content: <List data={receivedTransfers} user={user!} />
       },
       { 
         title: 'Latest expenses',
-        content: <List data={receivedTransfers} user={user!} />
+        content: <List data={sentTransfers} user={user!} />
       }
     ]
     return (

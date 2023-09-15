@@ -19,10 +19,16 @@ export default function RootLayout({
     <ClerkProvider appearance={{
       baseTheme: dark,
       elements: {
-        formButtonPrimary: 'bg-yellow-600 hover:bg-amber-600 text-sm normal-case text-amber-300',
-        footerActionLink: 'text-yellow-600',
+        formButtonPrimary: 'bg-yellow-600 hover:bg-amber-600 text-sm normal-case text-amber-300 ',
+        footerActionLink: 'text-amber-600 hover:text-normal hover:no-underline hover:text-amber-700',
         formFieldInput: 'text-white',
-        otpCodeFieldInputs: 'text-zinc-900'
+        formFieldAction: 'text-amber-600',
+        otpCodeFieldInputs: 'text-zinc-900',
+        otpCodeFieldInput: 'focus:accent-amber-600 focus:border-amber-600',
+        identityPreviewEditButton: 'text-amber-600',
+        formResendCodeLink: 'text-lg text-amber-600 hover:text-normal hover:no-underline hover:text-amber-700',
+        headerBackLink: 'text-amber-600',
+        headerBackIcon: 'text-amber-600'
       },
       
     }}>
