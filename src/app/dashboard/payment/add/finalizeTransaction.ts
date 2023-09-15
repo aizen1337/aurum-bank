@@ -1,6 +1,6 @@
 'use server'
 import Transaction from "@/classes/Transaction"
-import { Transactions } from "@prisma/client"
-export default async function finalizeTransaction(transaction: Transactions) {
-   new Transaction(transaction as Transactions)
+import { TransactionWithUserID } from "@/components/List/List"
+export default async function finalizeTransaction(transaction: TransactionWithUserID) {
+   new Transaction(transaction as TransactionWithUserID)
 }

@@ -75,7 +75,7 @@ export default class Transaction {
         }
     }
     async isLimited() {
-        const {success} = await RateLimit.limit(this.transaction.source_account_id)
+        const {success} = await RateLimit.limit(this.transaction.source_account.account_holder)
         this.success = success
     }
 }
