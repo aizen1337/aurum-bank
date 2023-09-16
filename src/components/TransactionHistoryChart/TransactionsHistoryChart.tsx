@@ -9,11 +9,19 @@ import {
   Legend,
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
+import getLabels from './getLabels';
+import extractValues from './extractValues';
 type Props = {
-  expenses?: number[]
-  incomes?: number[]
+  expenses?: Map<string, number>
+  incomes?: Map<string, number>
 }
 const TransactionsHistoryChart = ({expenses,incomes}: Props) => {
+  if(expenses?.size == 0 && incomes?.size == 0) {
+    return null;
+  }
+  const labels = getLabels(expenses!,incomes!)
+  const expensesAmount = extractValues(expenses!)
+  const incomesAmount = extractValues(incomes!)
   ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -26,16 +34,16 @@ const TransactionsHistoryChart = ({expenses,incomes}: Props) => {
      <Bar 
      data={
       {
-        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+        labels: labels,
         datasets: [
           {
             label: 'Expenses',
-            data: expenses,
+            data: expensesAmount,
             backgroundColor: 'red'
           },
           {
             label: 'Incomes',
-            data: incomes,
+            data: incomesAmount,
             backgroundColor: 'blue'
           }
         ]

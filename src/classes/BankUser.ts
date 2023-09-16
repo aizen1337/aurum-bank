@@ -4,6 +4,7 @@ import { Accounts } from "@prisma/client";
 import { clerkClient } from "@clerk/nextjs";
 import { Receiver } from "@/app/dashboard/payment/add/Form";
 import { groupBy } from "@/utils/groupBy";
+import groupAndSumTransactionsByMonth from "@/utils/groupAndSumTransactionsByMonth";
 export default class BankUser {
     user: User 
       constructor(user: User) {
@@ -11,8 +12,24 @@ export default class BankUser {
           Promise.resolve(this.createAccountForTheNewUser())
       }
       async getTransactions()
-        {
+      {
           return Promise.all([this.getSentTransfers(),this.getReceivedTransfers()])
+      }
+      async getLatestTransactions() {
+          const latestTransactions = await database.transactions.findMany({
+            take: 5,
+            include: {
+              source_account: {
+                select: {
+                  account_holder: true
+                }
+              }
+            },
+            orderBy: {
+              createdAt: 'desc'
+            }
+          })
+          return latestTransactions
       }
       async getSentTransfers() {
         const transactions = await database.transactions.findMany({
@@ -20,6 +37,17 @@ export default class BankUser {
             destination_account: {
               account_holder: this.user.id
             }
+          },
+          take: 5,
+          include: {
+            source_account: {
+              select: {
+                account_holder: true
+              }
+            }
+          },
+          orderBy: {
+            createdAt: 'desc'
           }
         })
         return transactions;
@@ -30,7 +58,18 @@ export default class BankUser {
             source_account: {
               account_holder: this.user.id
             }
-          }
+          },
+            take: 5,
+            include: {
+              source_account: {
+                select: {
+                  account_holder: true
+                }
+              }
+            },
+            orderBy: {
+              createdAt: 'desc'
+            }
         })
         return transactions
       }
@@ -118,35 +157,23 @@ export default class BankUser {
     })
     return [Object.values(sentTransactionsSum._sum), Object.values(receivedTransactionsSum._sum)]
   }
-  async recentTransactionsAmounts() {
+  async recentTransactionsAmountsGroupedByMonth() {
     const onlyIncomesAmounts = await database.transactions.findMany({
-      select: {
-        transactionAmount: true
-      },
       where: {
         destination_account: {
           account_holder: this?.user.id
         }
-      }
+      },
     })
     const onlyExpensesAmounts = await database.transactions.findMany({
-      select: {
-        transactionAmount: true
-      },
       where: {
         source_account: {
           account_holder: this?.user.id
         }
       }
     })
-      const expenses: number[] = [];
-      const incomes: number[] = [];
-      onlyIncomesAmounts.forEach((value) => {
-        incomes.push(value.transactionAmount)
-      })
-        onlyExpensesAmounts.forEach((value) => {
-        expenses.push(value.transactionAmount)
-      })
+      const incomes = groupAndSumTransactionsByMonth(onlyIncomesAmounts)
+      const expenses = groupAndSumTransactionsByMonth(onlyExpensesAmounts)
       return {
         expenses: expenses,
         incomes: incomes
@@ -171,6 +198,7 @@ export default class BankUser {
     const transactions = await this.getTransactions()
     const sentTransfers = await this.getSentTransfers()
     const receivedTransfers = await this.getReceivedTransfers()
-    return {accounts, cards, transactions, sentTransfers, receivedTransfers}
+    const latestTransactions = await this.getLatestTransactions()
+    return {accounts, cards, transactions, sentTransfers, receivedTransfers, latestTransactions}
   }
 }

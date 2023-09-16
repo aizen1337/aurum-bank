@@ -6,11 +6,12 @@ import React from 'react'
 const Page = async () => {
     const user = await currentUser()
     const loggedInUser = new BankUser(user!)
-    const transactions = await loggedInUser.recentTransactionsAmounts()
+    const transactions = await loggedInUser.recentTransactionsAmountsGroupedByMonth()
+    console.log(transactions)
   return (
     <main className='w-9/12 h-screen flex flex-col justify-center'>
-        <TransactionsHistoryChart incomes={transactions.incomes} expenses={transactions.expenses}/>
-        <FloatingPanel/>
+        {transactions && <TransactionsHistoryChart incomes={transactions.incomes} expenses={transactions.expenses}/>}
+        {/* {`<FloatingPanel/>`} */}
     </main>
   )
 }
