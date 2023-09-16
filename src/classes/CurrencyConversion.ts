@@ -8,9 +8,15 @@ export default class CurrencyConversion {
         return data.rates[0].mid
     }
     async convert() {
+        if (await this.compare()) {
+            throw new Error('Currencies are equal')
+        }
         let sourceCurrencyMid = await this.getCurrentRate(this.source)
         let targetCurrencyMid = await this.getCurrentRate(this.target)
         let multiplier = sourceCurrencyMid / targetCurrencyMid
         return this.amount * multiplier
+    }
+    async compare() {
+        return this.source == this.target
     }
 }

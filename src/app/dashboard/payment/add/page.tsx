@@ -8,7 +8,7 @@ const Payment = async () => {
   const accounts = await loggedInUser.getAccounts()
   const receivers = await loggedInUser.getRecentReceivers()
   return (
-      <main className='lg:w-6/12 w-screen h-screen flex flex-col justify-evenly'>
+      <main className='xl:w-6/12 w-screen h-screen flex flex-col justify-evenly'>
           <Form accounts={accounts} recentReceivers={receivers} currentUser={user!}/>
       </main>
   )
