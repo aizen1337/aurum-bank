@@ -34,10 +34,10 @@ export default async function Dashboard() {
     ]
     return (
     <section className="w-full flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#252525] to-[#141414]">
-      <div className="h-full w-full flex flex-col sm:grid sm:grid-cols-2 gap-8 text-white p-5">
+      <div className="h-full w-full flex flex-col lg:grid lg:grid-cols-2 gap-8 text-white p-5">
         <Widget title="Accounts">
                 {
-                 accounts?.map((account) => (
+                accounts?.map((account) => (
                 <AccountBadge key={account.account_id} account={account}/>
                 ))
                 }

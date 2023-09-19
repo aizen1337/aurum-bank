@@ -4,11 +4,13 @@
 ### Getting Started
 Clone repository 
 ```bash
-git clone -b development https://github.com/aizen1337/aurum-bank.git
-```
-```bash
+git clone -b development https://github.com/aizen1337/aurum-bank.git .
+npm install
 npm run dev
+```
+
 # or
+```bash
 docker-compose up --build
 ```
 
