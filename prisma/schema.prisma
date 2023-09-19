@@ -46,7 +46,6 @@ model Cards {
     card_cvv Int
     account Accounts @relation(fields: [account_id], references: [account_id])
     account_id String
-
     @@index([account_id])
 }
 
