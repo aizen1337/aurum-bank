@@ -33,7 +33,7 @@ const ContactList = ({setNumber, contacts, currentContact}: Props) => {
         )
     }
   return (
-        <section className=' bg-white text-black rounded-lg m-1 w-full'>
+        <section className=' bg-white text-black rounded-lg m-1 w-full hover:outline-4 hover:ring-2 hover:ring-amber-600 duration-500'>
             <header className='flex cursor-pointer gap-4'>
                 <input type='text' className="p-5 w-full text-black rounded-lg" 
                 placeholder="Expand list via icon on the right or enter number manually" 

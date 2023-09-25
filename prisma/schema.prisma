@@ -20,9 +20,9 @@ model Transactions {
     source_account_id String
     destination_account Accounts @relation("destination", fields: [destination_account_id], references: [account_id])
     destination_account_id String
-    transactionAmount Int
+    transactionAmount Float
     currency String
-    transactionTitle String @default("Money transfer")
+    transactionTitle String
     @@index([destination_account_id])
     @@index([source_account_id])
 }

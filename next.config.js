@@ -8,7 +8,8 @@ const nextConfig = {
             'i.imgur.com',
             'images.unsplash.com',
             'www.creativefabrica.com',
-            'e0.pxfuel.com'
+            'e0.pxfuel.com',
+            'media.istockphoto.com'
         ],
     }
 }

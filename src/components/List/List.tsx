@@ -1,6 +1,7 @@
 import { type Transactions } from '@prisma/client'
 import React from 'react'
 import { User } from '@clerk/nextjs/dist/server'
+import Link from 'next/link'
 export type TransactionWithUserID = Transactions & {
   source_account: {
     account_holder: string;
@@ -19,10 +20,11 @@ const List = ({data, user}: Props) => {
     data.map((transaction, index) => 
     (   
         <>
-        <li key={index} className={`${transaction.source_account.account_holder  !== user?.id ? 'text-red-500' : 'text-lime-600'} flex md:gap-4 gap-1 m-2`}>
-            <span className='sm:block hidden'>{transaction.source_account.account_holder !== user?.id ? 'Spent' : "Received"}</span>
+        <Link href={`dashboard/transactions/${transaction.id}`}>
+        <li key={index} className={`${transaction.source_account.account_holder  == user?.id ? 'text-red-500' : 'text-lime-600'} flex md:gap-4 gap-1 m-2`}>
+            <span className='sm:block hidden'>{transaction.source_account.account_holder == user?.id ? 'Spent' : "Received"}</span>
             <p>{Number(transaction.transactionAmount).toString()} <small>{transaction.currency.replaceAll('"'," ")}</small></p>
-            {transaction.source_account.account_holder  !== user?.id
+            {transaction.source_account.account_holder  == user?.id
             ?
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 ml-auto">
               <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 17.25L12 21m0 0l-3.75-3.75M12 21V3" />
@@ -34,6 +36,7 @@ const List = ({data, user}: Props) => {
             }
             <small>{transaction.createdAt.toLocaleDateString('pl-PL')}</small>
         </li>
+        </Link>
         <hr className='mx-5 border-zinc-700'/>
         </>
     ))
