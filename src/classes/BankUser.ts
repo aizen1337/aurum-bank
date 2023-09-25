@@ -31,7 +31,7 @@ export default class BankUser {
           })
           return latestTransactions
       }
-      async getSentTransfers() {
+      async getReceivedTransfers() {
         const transactions = await database.transactions.findMany({
           where: {
             destination_account: {
@@ -52,7 +52,7 @@ export default class BankUser {
         })
         return transactions;
       }
-      async getReceivedTransfers() {
+      async getSentTransfers() {
         const transactions = await database.transactions.findMany({
           where: {
             source_account: {

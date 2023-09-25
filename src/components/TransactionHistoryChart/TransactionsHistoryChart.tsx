@@ -39,12 +39,12 @@ const TransactionsHistoryChart = ({expenses,incomes}: Props) => {
           {
             label: 'Expenses',
             data: expensesAmount,
-            backgroundColor: 'red'
+            backgroundColor: '#FF7E00'
           },
           {
             label: 'Incomes',
             data: incomesAmount,
-            backgroundColor: 'blue'
+            backgroundColor: '#FFBF00'
           }
         ]
       }

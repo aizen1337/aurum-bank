@@ -11,7 +11,7 @@ const Select = ({accounts,setter}: SelectProps) => {
   const [selectedAccount, setSelectedAccount] = useState<Accounts | null>(accounts[0])
   const [expanded, setExpanded] = useState(false)
   return (
-    <section className='p-5 bg-white text-black rounded-lg m-1 w-full'>
+    <section className='p-5 bg-white text-black rounded-lg m-1 w-full hover:outline-4 hover:ring-2 hover:ring-amber-600 duration-500'>
         <header className='flex cursor-pointer gap-4' onClick={() => setExpanded(!expanded)}>
         Choose an account 
         {selectedAccount && <h1 className='text-amber-900'>{selectedAccount.account_name} ({Number(selectedAccount.balance)} {selectedAccount.defaultCurrency})</h1>} 
