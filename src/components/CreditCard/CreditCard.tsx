@@ -10,11 +10,11 @@ type Props = {
 const CreditCard = ({card}: Props) => {
   return (
     <Link href={`/dashboard/cards/${card.card_number}`}>
-          <div className="w-full xl:w-8/12 aspect-video m-auto bg-red-100 rounded-xl relative text-sm text-white shadow-2xl transition-transform transform hover:scale-110 my-10 z-0">
+          <div className="w-full xl:w-8/12 aspect-video m-auto bg-red-100 flex flex-col rounded-xl relative text-sm text-white shadow-2xl transition-transform transform hover:scale-110 my-10">
             
             <Image className="relative object-cover w-full h-full rounded-xl" fill src={switchCardBackground(card.card_type)} alt='credit card'/>
             
-            <div className="w-full px-8 z-10 top-8">
+            <div className="w-full px-8 relative top-8">
                 <div className="flex">
                     <div className="">
                         <p className="font-medium tracking-widest">
