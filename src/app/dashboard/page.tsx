@@ -36,11 +36,14 @@ export default async function Dashboard() {
     <section className="w-full flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#252525] to-[#141414]">
       <div className="h-full w-full flex flex-col lg:grid lg:grid-cols-2 gap-8 text-white p-5">
         <Widget title="Accounts">
-                {
+          <div className="h-full flex flex-col py-2">
+            {
                 accounts?.map((account) => (
                 <AccountBadge key={account.account_id} account={account}/>
+              
                 ))
-                }
+            }
+          </div>
         </Widget>
         <Widget title="Cards">
           {
@@ -68,17 +71,17 @@ export default async function Dashboard() {
         </Widget>
          <Widget title="Expenses and Incomes">
               <section className='flex items-center justify-between flex-col h-full w-full'>
-                <div className="w-full h-full shadow-inner hover:shadow-2xl hover:bg-zinc-900 cursor-pointer p-3 rounded-lg">
+                <div className="w-full h-full shadow-inner hover:shadow-2xl hover:bg-zinc-900 cursor-pointer p-5 my-1 rounded-lg duration-500">
                   <h1 className='text-red-500 text-2xl'>Expenses:</h1>
-                <p className='text-lg text-red-500'>
-                  {summedTransactionsAmount[0]}
-                </p>
+                  <p className='text-2xl text-red-500'>
+                    {summedTransactionsAmount[0]}
+                  </p>
                 </div>
-                <div className="w-full h-full shadow-inner hover:shadow-2xl hover:bg-zinc-900 cursor-pointer p-3 rounded-lg">
+                <div className="w-full h-full shadow-inner hover:shadow-2xl hover:bg-zinc-900 cursor-pointer p-5 my-3 rounded-lg duration-500">
                   <h1 className='text-green-500 text-2xl'>Incomes:</h1>
-                <p className='text-lg text-green-500'>
-                  {summedTransactionsAmount[1]} 
-                </p>
+                  <p className='text-2xl text-green-500'>
+                    {summedTransactionsAmount[1]} 
+                  </p>
                 </div>
               </section>
          </Widget>
