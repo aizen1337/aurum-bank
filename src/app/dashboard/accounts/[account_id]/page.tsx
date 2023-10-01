@@ -1,10 +1,20 @@
+import database from '@/utils/prisma'
 import React from 'react'
 
-type Props = {}
+type Props = {
+  params: {
+    account_id: string
+  }
+}
 
-const AccountDetails = (props: Props) => {
+const AccountDetails = async ({params}: Props) => {
+  const account = await database.accounts.findUnique({
+    where: {
+      account_id: params.account_id
+    }
+  })
   return (
-    <div>AccountDetails</div>
+    <div>{JSON.stringify(account)}</div>
   )
 }
 

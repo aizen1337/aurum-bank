@@ -27,10 +27,9 @@ const Form = ({accounts,recentReceivers, currentUser}: Props) => {
       account_holder: currentUser.id
     }
    })
-   const {equal, error, loading, message} = useExchange(transaction.source_account_id, transaction.destination_account_id)
-  return (
+    const {equal, error, loading, message} = useExchange(transaction.source_account_id, transaction.destination_account_id)
+    return (
     <>
-
     <form className='flex flex-col p-5 h-96 justify-evenly text-black' onSubmit={async () => finalizeTransaction(transaction as TransactionWithUserID)}>
         <h1 className='text-center text-white text-4xl my-10 '>Make a transfer</h1>
         <ContactList contacts={recentReceivers} currentContact={transaction.destination_account_id} setNumber={setTransaction}/>
